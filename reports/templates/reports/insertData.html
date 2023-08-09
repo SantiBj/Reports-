@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+  </head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <body>
+    <div id="loading"
+      class="hidden flex justify-center items-center fixed z-10 bg-[rgba(0,0,0,0.8)] top-0 left-0 right-0 bottom-0">
+      <img class="w-[80px]"
+        src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
+        alt>
+    </div>
+    <nav class="mx-[10%] py-[20px] flex items-center">
+      <img class="w-[80px]" src="{% static 'img/logo.png' %}" />
+    </nav>
+    <section class="h-[80vh] w-full flex justify-center items-center">
+      <form enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="flex flex-col w-fit">
+          <div id="help-visual" class="bg-green-400 p-[8px] rounded-md hidden">
+
+          </div>
+          <label class="hover:opacity-70 transition-all cursor-pointer"
+            for="file-input">
+            <img class="select-none"
+              src="https://cdn.iconscout.com/icon/free/png-256/free-upload-1439353-1214473.png?f=webp&w=256" />
+            <input required id="file-input" class="hidden" name="file"
+              class="border-green-700" type="file"
+              accept=".DBF">
+          </label>
+        </div>
+        <button
+          id="btn-submit"
+          type="button"
+          class="select-none transition-all rounded-md bg-red-500 text-white py-[5px] hover:bg-red-800 w-full disable">
+          Generar
+      </button>
+        </div>
+      </form>
+    </section>
+    <a href="/transform/">dddd</a>
+  </body>
+  <script src="{% static 'js/insertData.js' %}"></script>
+  <script>
+    const csrfToken = "{{ csrf_token }}"
+    const inputFile = document.getElementById('file-input')
+    const btn = document.getElementById('btn-submit')
+    const loading = document.getElementById('loading')
+
+    btn.addEventListener('click',async ()=>{
+    if (inputFile.files.length > 0) {
+        //objecto con la key y el valor 
+        const formData = new FormData();
+        formData.append('file',inputFile.files[0])
+        const file = await consult(formData,csrfToken,loading)
+        console.log(file)
+        const url = URL.createObjectURL(file)
+        window.open(url,'_blank') 
+    }
+})
+
+  async function consult(data,csrfToken,loading){
+    try {
+      loading.classList.remove('hidden')
+      const consultFetch = await fetch("/transform/",{
+        method:'POST',
+        body:data,
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      })
+      if (!consultFetch.ok) {
+        throw new Error(consultFetch.status)
+      }
+      const file = await consultFetch.blob()
+      loading.classList.add('hidden')
+      
+      return file
+    } catch (error) {
+      console.log(error.message)
+    }
+    
+  }
+  </script>
+</html>

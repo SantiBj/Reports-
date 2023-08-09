@@ -22,7 +22,7 @@ Para calcular el total por cada proveedor, se recorren los registros correspondi
 - [Pillow] - libreria para el manejo de imagenes
 - [Tailwind] - framework css
 - [Js] - lenguaje de programacion para interactividad
-- [Openpyxl] - libreria para el maneko de archivos excel
+- [Openpyxl] - libreria para el manejo de archivos excel
 - [Weasyprint] - libreria para la creacion de archivos pdf
 - [Dbfread]- libreria para manipular archivos dbf
 - [Git]- control de versiones

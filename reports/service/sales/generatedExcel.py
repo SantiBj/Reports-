@@ -1,9 +1,9 @@
 import openpyxl
 from django.http import HttpResponse
-from .calculatedTotals import calculatedTotalsBySupplier
+from ..share.calculatedTotals import calculatedTotalsBySupplier
 from datetime import datetime
 from .formatedRecordForDictToTuple import formatedRecordForDictToTuple
-
+from ..share.printerDataInSheet import printerDataInSheet
 
 
 def generatedExcel(dataDict, cutNumber):
@@ -19,14 +19,14 @@ def generatedExcel(dataDict, cutNumber):
     startRow = 5
     startCol = 1
 
-    # add name supplier in excel and n° cut
+    # añadiendo cabecera
     sheet.cell(row=2, column=2, value=f"Proveedor: {dataDict[0]['PROVEEDOR']}")
     sheet.cell(row=3, column=2,
                value=f"Periodo: {datetime.now().date()}     N° corte: {cutNumber}")
 
-    for rowIndex, rowData in enumerate(dataInTuples, start=startRow):
-        for colIndex, value in enumerate(rowData, start=startCol):
-            sheet.cell(row=rowIndex, column=colIndex, value=value)
+    #añadiendo registros al excel
+    printerDataInSheet(dataInTuples,startRow,startCol,sheet)
+    
 
     # calculo de total cantidad,bruto,neto
     calculatedTotalsBySupplier(dataDict, sheet,isUEX)

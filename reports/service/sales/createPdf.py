@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from decimal import getcontext
-from .calculatedTotals import total,bookNegativeAndCalculationTotals,calculateTotalWithDataNegative
+from ..share.calculatedTotals import total,bookNegativeAndCalculationTotals,calculateTotalWithDataNegative
 from datetime import datetime
 from weasyprint import HTML,CSS
 

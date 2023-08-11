@@ -1,4 +1,4 @@
-from .formatedRecordForDictToTuple import formatedRecordForDictToTuple
+from ..sales.formatedRecordForDictToTuple import formatedRecordForDictToTuple
 from decimal import Decimal
 
 #suma total bruto, total neto y cantidad de todos los libros del proveedor

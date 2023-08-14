@@ -15,13 +15,13 @@ def selectorTransformData(file):
 
         with DBF(fileTemporary.name,encoding='cp850') as dictData:
             for record in dictData:
-                if (int(record["id_tipo_corte"]) == 1):
+                if (int(record["TIPO_CORTE"]) == 1):
                     dataAlreadyExists = dataClassified["sales"]
                     dataClassified["sales"] = [
                         *dataAlreadyExists,
                         record
                     ]
-                if (int(record["id_tipo_corte"])== 2):
+                if (int(record["TIPO_CORTE"])== 2):
                     dataAlreadyExists = dataClassified["coeditions"]
                     dataClassified["coeditions"] = [
                         *dataAlreadyExists,

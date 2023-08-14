@@ -5,12 +5,11 @@ from ..share.calculatedTotalRecord import totalRecord
 #   }
 # input = [{},{}]
 
-
+#si es de los andes debo agrupar todas la facultades y devolver un dict con el numCut de cada faculta
 def formaterDataCoeditions(dataCoeditions):
     records = {}
 
     for record in dataCoeditions:
-
         coeditor = record["NUM"]
         totals = totalRecord(record)
         if not coeditor in records:
@@ -24,7 +23,7 @@ def formaterDataCoeditions(dataCoeditions):
                 "CANTIDAD":str(record["CANTIDAD"]).strip(),
                 "TOTAL_BRUTO":totals["grossTotal"],
                 "DESCUENTO":record["DESCTO"],
-                "VALOR_NETO":totals["netTotal"],
+                "TOTAL_NETO":totals["netTotal"],
                 "COEDITOR":record["COEDITOR"]
             }]
         else:

@@ -31,8 +31,14 @@ def selectorTransformData(file):
     dataFormattedSale = formatterDataSales(dataClassified["sales"])
     dataFormattedCoeditions = formaterDataCoeditions(dataClassified["coeditions"])
 
-    return {
-        "sales":dataFormattedSale,
-        "coeditions":dataFormattedCoeditions
-    }
+    if len(dataFormattedSale.keys()) > 0 :
+        return {
+            "sales":dataFormattedSale,
+            "type":"sales"
+        }
+    if len(dataFormattedCoeditions.keys()) > 0 :
+        return {
+            "coeditions":dataFormattedCoeditions,
+            "type":"coeditions"
+        }
     # retorna los datos segun el formater usado

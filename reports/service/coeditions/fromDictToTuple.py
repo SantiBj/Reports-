@@ -7,7 +7,7 @@ def formatedFromDictToTuple(dict):
         dict["AUTOR"],
         dict["PRECIO"],
         dict["CANTIDAD"],
-        dict["TOTAL_BRUTO"],
+        dict["VALOR_BRUTO"],
         dict["DESCUENTO"],
-        dict["TOTAL_NETO"]
+        dict["VALOR_NETO"]
     )

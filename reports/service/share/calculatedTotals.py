@@ -8,7 +8,7 @@ def total(recordsSupplier):
         totalNetValue = 0
 
         for record in recordsSupplier:
-            totalQuantity += record["CANTIDAD"]
+            totalQuantity += int(record["CANTIDAD"])
             totalGrossValue += record["VALOR_BRUTO"]
             totalNetValue += record["VALOR_NETO"]
         
@@ -18,6 +18,7 @@ def total(recordsSupplier):
             "totalNetValue":totalNetValue,
         }
 
+# sales
 def calculatedTotalsBySupplier(recordsSupplier,sheet,isUEX):
     totalV = total(recordsSupplier)
     endRecord = sheet.max_row+2
@@ -87,7 +88,7 @@ def bookNegativeAndCalculationTotals(recordsSupplier):
 
     for recordT in recordsSupplier:
         if int(recordT["CANTIDAD"]) < 0:
-            totalQuantityNegatives += recordT["CANTIDAD"]
+            totalQuantityNegatives += int(recordT["CANTIDAD"])
             totalGrossNegatives += recordT["VALOR_BRUTO"]
             totalNetNegatives += recordT["VALOR_NETO"]
             booksWithQuantityNegative.append(recordT)
@@ -111,3 +112,4 @@ def createChartText(sheet,isUEX):
 
     sheet.cell(row=endRecord,column= 5 if isUEX else 4,value=text)
     sheet.row_dimensions[endRecord].height = 150
+#sales

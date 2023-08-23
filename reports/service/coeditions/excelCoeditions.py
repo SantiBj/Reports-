@@ -5,7 +5,9 @@ from ..share.calculatedTotals import total
 from django.http import HttpResponse
 from .fromDictToTuple import formatedFromDictToTuple
 from .printerTotal import printerTotal
-from ..share.calculatedTotals import calculateTotalWithDataNegative,bookNegativeAndCalculationTotals
+from ..share.calculatedTotals import calculateTotalWithDataNegative, bookNegativeAndCalculationTotals
+from .printers import printerTotalNegatives
+from .booksNegToTuple import booksNegToTuple
 
 
 def excelCoeditions(dataEditions, cutNumber, codCli=False):
@@ -32,40 +34,34 @@ def excelCoeditions(dataEditions, cutNumber, codCli=False):
                 dataCoeditor.append(formatedFromDictToTuple(recordCodCli))
             printerDataInSheet(dataCoeditor, startRow, startCol, sheet)
             startRow = startRow + elements + 1
-            
 
         # total sin negativos
-        totalsCodCli  = total(recordsCodCli) 
-        printerTotal(sheet,totalsCodCli)
+        totalsCodCli = total(recordsCodCli)
+        printerTotal(sheet, totalsCodCli)
 
         # total negativos
         totalsNegatives = bookNegativeAndCalculationTotals(recordsCodCli)
         if len(totalsNegatives["books"]) > 0:
             endRow = sheet.max_row+3
-            tuplesNegatives = []
-            for bookNegative in totalsNegatives['books']:
-                tuplesNegatives.append(formatedFromDictToTuple(bookNegative))
-            printerDataInSheet(tuplesNegatives,endRow,1,sheet)
-            endRow = sheet.max_row+1
-            sheet.cell(row=endRow,column=6,value="Total =")
-            sheet.cell(row=endRow,column=7,value=totalsNegatives["quantity"])
-            sheet.cell(row=endRow,column=8,value=totalsNegatives["grossTotal"])
-            sheet.cell(row=endRow,column=10,value=totalsNegatives["netTotal"])
 
-            #total con negativos
+            # total negatives
+            printerDataInSheet(booksNegToTuple(
+                totalsNegatives), endRow, 1, sheet)
+            endRow = sheet.max_row+1
+            printerTotalNegatives(totalsNegatives, sheet, endRow)
+
+            # total con negativos
             endRow = sheet.max_row+3
-            fullTotal = calculateTotalWithDataNegative(totalsCodCli,totalsNegatives)
-            sheet.cell(row=endRow,column=6,value="Total =")
-            sheet.cell(row=endRow,column=7,value=fullTotal["quantity"])
-            sheet.cell(row=endRow,column=8,value=fullTotal["grossTotal"])
-            sheet.cell(row=endRow,column=10,value=fullTotal["netTotal"])
+            fullTotal = calculateTotalWithDataNegative(
+                totalsCodCli, totalsNegatives)
+            printerTotalNegatives(fullTotal, sheet, endRow)
 
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = f'attachment; filename=COED-{dataEditions[nCutCodCli][0]["COEDITOR"][:15]}.xlsx'
+        response['Content-Disposition'] = f'attachment; filename=COED-{dataEditions[nCutCodCli][0]["COEDITOR"][:30]}.xlsx'
         book.save(response)
         return response
-    
+
     else:
         dataInTuples = []
         for record in dataEditions:
@@ -75,10 +71,26 @@ def excelCoeditions(dataEditions, cutNumber, codCli=False):
             row=3, column=2, value=f"Periodo: {datetime.now().date()}     N° corte: {cutNumber}")
         printerDataInSheet(dataInTuples, startRow, startCol, sheet)
 
-        totalsCoeditor = total(dataEditions)
         # total sin negativos
-        printerTotal(sheet,totalsCoeditor)
+        totalsCoeditor = total(dataEditions)
+        printerTotal(sheet, totalsCoeditor)
 
+        # calculo y pintar negativos
+        totalsNegatives = bookNegativeAndCalculationTotals(dataEditions)
+        if len(totalsNegatives['books']) > 0:
+            endRow = sheet.max_row + 2
+
+            # total negativos
+            printerDataInSheet(booksNegToTuple(
+                totalsNegatives), endRow, 1, sheet)
+            endRow = endRow = sheet.max_row+1
+            printerTotalNegatives(totalsNegatives, sheet, endRow)
+
+            # total con negativos
+            endRow = sheet.max_row+3
+            fullTotal = calculateTotalWithDataNegative(
+                totalsCoeditor, totalsNegatives)
+            printerTotalNegatives(fullTotal, sheet, endRow)
 
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')

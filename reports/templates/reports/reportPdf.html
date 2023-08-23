@@ -104,7 +104,7 @@
                     {% if isSAP %}
                     <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.SAP }}</td>
                     {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.ISBN }}-{{ record.TITULO }}-{{ record.EDICION }}-{{ record.AUTOR }}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.ISBN }}-{{ book.TITULO }}-{{ book.EDICION }}-{{ book.AUTOR }}</td>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.PRECIO|floatformat:2 }}{% else %}{{ book.PRECIO|intcomma }}{% endif %}</td>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.CANTIDAD }}</td>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.VALOR_BRUTO|floatformat:2 }}{% else %}{{ book.VALOR_BRUTO|intcomma }}{% endif %}</td>

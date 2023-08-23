@@ -6,6 +6,7 @@ from .service.coeditions.excelCoeditions import excelCoeditions
 from django.http import HttpResponse
 from .service.share.createZip import createZip
 from .service.sales.createPdf import createPdf
+from .service.coeditions.pdfCoeditors import createPdf as pdfCoeditors
 
 # Create your views here.
 
@@ -14,11 +15,9 @@ def insertDataForDB(request):
     return render(request, "reports/insertData.html")
 
 
-# recibe datos y no hace nada mas
 def combinaterPaternOfFileToExcel(request):
     if (request.method == "POST"):
         # devuelve la data de cada caso
-
         dataFormated = selectorTransformData(request.FILES['file'])
         filesCreated = []
         filesCreatedCoeditors = []
@@ -33,17 +32,25 @@ def combinaterPaternOfFileToExcel(request):
 
         if dataFormated["type"] == "coeditions":
             # primero los reportes normales
-            for coeditorData in dataFormated["coeditions"]["records"].keys():
+            for coeditorNum in dataFormated["coeditions"]["records"].keys():
                 filesCreatedCoeditors.append(excelCoeditions(
-                    dataFormated["coeditions"]["records"][coeditorData], coeditorData))
+                    dataFormated["coeditions"]["records"][coeditorNum], coeditorNum))
+                filesCreatedCoeditors.append(pdfCoeditors(
+                    dataFormated["coeditions"]["records"][coeditorNum], coeditorNum, request
+                )
+                )
+            # reportes codcli
             for codCli in dataFormated["coeditions"]["coeditorsCodCli"].keys():
                 filesCreatedCoeditors.append(excelCoeditions(
                     dataFormated["coeditions"]["coeditorsCodCli"][codCli], codCli, True
                 ))
-            # los reportes con codcli
+                filesCreatedCoeditors.append(pdfCoeditors(
+                    dataFormated["coeditions"]["coeditorsCodCli"][codCli], codCli, request, True
+                ))
 
         # conversion de datos a zip
-        contentZip = createZip(filesCreatedCoeditors)
+        contentZip = createZip(
+            filesCreatedCoeditors if dataFormated["type"] == "coeditions" else filesCreated)
 
         response = HttpResponse(content_type="application/zip")
         response['Content-Disposition'] = f'attachment; filename=rep-{datetime.now().date()}.zip'

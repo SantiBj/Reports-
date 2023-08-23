@@ -23,6 +23,8 @@ def formaterDataCoeditions(dataCoeditions):
                     "VALOR_BRUTO":totals["grossTotal"],
                     "DESCUENTO":record["DESCTO"],
                     "VALOR_NETO":totals["netTotal"],
+                    "ISBN":str(record["ISBN"]),
+                    "MONEDA":str(record["MONEDA"]).strip(),
                     "COEDITOR": str(record["PROVEEDOR"]).strip(),
                 }]
             else:
@@ -39,7 +41,9 @@ def formaterDataCoeditions(dataCoeditions):
                         "CANTIDAD":str(record["CANTIDAD"]).strip(),
                         "VALOR_BRUTO":totals["grossTotal"],
                         "DESCUENTO":record["DESCTO"],
+                        "ISBN":str(record["ISBN"]),
                         "VALOR_NETO":totals["netTotal"],
+                        "MONEDA":str(record["MONEDA"]).strip(),
                         "COEDITOR": str(record["PROVEEDOR"]).strip(),
                     }
                 ]
@@ -56,7 +60,9 @@ def formaterDataCoeditions(dataCoeditions):
                         "CANTIDAD":str(record["CANTIDAD"]).strip(),
                         "VALOR_BRUTO":totals["grossTotal"],
                         "DESCUENTO":record["DESCTO"],
+                        "ISBN":str(record["ISBN"]),
                         "VALOR_NETO":totals["netTotal"],
+                        "MONEDA":str(record["MONEDA"]).strip(),
                         "COEDITOR": str(record["PROVEEDOR"]).strip(),
                     }]
             elif codCli in coeditorsCodCli and not coeditor in coeditorsCodCli[codCli]:
@@ -70,7 +76,9 @@ def formaterDataCoeditions(dataCoeditions):
                     "CANTIDAD":str(record["CANTIDAD"]).strip(),
                     "VALOR_BRUTO":totals["grossTotal"],
                     "DESCUENTO":record["DESCTO"],
+                    "ISBN":str(record["ISBN"]),
                     "VALOR_NETO":totals["netTotal"],
+                    "MONEDA":str(record["MONEDA"]).strip(),
                     "COEDITOR": str(record["PROVEEDOR"]).strip()
                 }]
 
@@ -88,7 +96,9 @@ def formaterDataCoeditions(dataCoeditions):
                         "CANTIDAD":str(record["CANTIDAD"]).strip(),
                         "VALOR_BRUTO":totals["grossTotal"],
                         "DESCUENTO":record["DESCTO"],
+                        "ISBN":str(record["ISBN"]),
                         "VALOR_NETO":totals["netTotal"],
+                        "MONEDA":str(record["MONEDA"]).strip(),
                         "COEDITOR": str(record["PROVEEDOR"]).strip(),
                     }
                 ]

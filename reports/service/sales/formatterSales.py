@@ -16,7 +16,7 @@ def formatterDataSales(dataSales):
 
         # valido si no esta en records
         if not num in records:
-            if str(recordSale["PROVEEDOR"]).strip()[:3] == "UEX":
+            if len(str(recordSale["SAP"]).strip()) == 0:
                 records[num] = [{
                     "CODIGO": str(recordSale["CODIGO"]).strip(),
                     "ISBN":str(recordSale["ISBN"]).strip(),

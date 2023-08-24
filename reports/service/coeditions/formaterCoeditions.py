@@ -12,26 +12,8 @@ def formaterDataCoeditions(dataCoeditions):
 
         if len(codCli) == 0:
             if not coeditor in records:
-                records[coeditor] = [{
-                    "CODIGO": str(record["CODIGO"]).strip(),
-                    "TIPO":str(record["TIPO"]).strip(),
-                    "TITULO":str(record["TITULO"]).strip(),
-                    "EDICION":str(record["EDICION"]).strip(),
-                    "AUTOR":str(record["AUTOR"]).strip(),
-                    "PRECIO":str(record["PRECIO"]),
-                    "CANTIDAD":str(record["CANTIDAD"]).strip(),
-                    "VALOR_BRUTO":totals["grossTotal"],
-                    "DESCUENTO":record["DESCTO"],
-                    "VALOR_NETO":totals["netTotal"],
-                    "ISBN":str(record["ISBN"]),
-                    "MONEDA":str(record["MONEDA"]).strip(),
-                    "COEDITOR": str(record["PROVEEDOR"]).strip(),
-                }]
-            else:
-                oldRecordsCoeditor = records[coeditor]
-                records[coeditor] = [
-                    *oldRecordsCoeditor,
-                    {
+                if len(str(record["SAP"]).strip()) == 0:
+                    records[coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
@@ -41,16 +23,75 @@ def formaterDataCoeditions(dataCoeditions):
                         "CANTIDAD":str(record["CANTIDAD"]).strip(),
                         "VALOR_BRUTO":totals["grossTotal"],
                         "DESCUENTO":record["DESCTO"],
-                        "ISBN":str(record["ISBN"]),
                         "VALOR_NETO":totals["netTotal"],
+                        "ISBN":str(record["ISBN"]),
                         "MONEDA":str(record["MONEDA"]).strip(),
                         "COEDITOR": str(record["PROVEEDOR"]).strip(),
-                    }
-                ]
+                    }]
+                else:
+                    records[coeditor] = [{
+                        "CODIGO": str(record["CODIGO"]).strip(),
+                        "TIPO":str(record["TIPO"]).strip(),
+                        "SAP":str(record["SAP"]).strip(),
+                        "TITULO":str(record["TITULO"]).strip(),
+                        "EDICION":str(record["EDICION"]).strip(),
+                        "AUTOR":str(record["AUTOR"]).strip(),
+                        "PRECIO":str(record["PRECIO"]),
+                        "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                        "VALOR_BRUTO":totals["grossTotal"],
+                        "DESCUENTO":record["DESCTO"],
+                        "VALOR_NETO":totals["netTotal"],
+                        "ISBN":str(record["ISBN"]),
+                        "MONEDA":str(record["MONEDA"]).strip(),
+                        "COEDITOR": str(record["PROVEEDOR"]).strip(),
+                    }]
+            else:
+                oldRecordsCoeditor = records[coeditor]
+                if len(str(record["SAP"]).strip()) == 0:
+                    records[coeditor] = [
+                        *oldRecordsCoeditor,
+                        {
+                            "CODIGO": str(record["CODIGO"]).strip(),
+                            "TIPO":str(record["TIPO"]).strip(),
+                            "TITULO":str(record["TITULO"]).strip(),
+                            "EDICION":str(record["EDICION"]).strip(),
+                            "AUTOR":str(record["AUTOR"]).strip(),
+                            "PRECIO":str(record["PRECIO"]),
+                            "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                            "VALOR_BRUTO":totals["grossTotal"],
+                            "DESCUENTO":record["DESCTO"],
+                            "ISBN":str(record["ISBN"]),
+                            "VALOR_NETO":totals["netTotal"],
+                            "MONEDA":str(record["MONEDA"]).strip(),
+                            "COEDITOR": str(record["PROVEEDOR"]).strip(),
+                        }
+                    ]
+                else:
+                    records[coeditor] = [
+                        *oldRecordsCoeditor,
+                        {
+                            "CODIGO": str(record["CODIGO"]).strip(),
+                            "TIPO":str(record["TIPO"]).strip(),
+                            "TITULO":str(record["TITULO"]).strip(),
+                            "EDICION":str(record["EDICION"]).strip(),
+                            "AUTOR":str(record["AUTOR"]).strip(),
+                            "PRECIO":str(record["PRECIO"]),
+                            "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                            "VALOR_BRUTO":totals["grossTotal"],
+                            "DESCUENTO":record["DESCTO"],
+                            "ISBN":str(record["ISBN"]),
+                            "SAP":str(record["SAP"]).strip(),
+                            "VALOR_NETO":totals["netTotal"],
+                            "MONEDA":str(record["MONEDA"]).strip(),
+                            "COEDITOR": str(record["PROVEEDOR"]).strip(),
+                        }
+                    ]
+
         else:
             if not codCli in coeditorsCodCli:
                 coeditorsCodCli[codCli] = {}
-                coeditorsCodCli[codCli][coeditor] = [{
+                if len(str(record["SAP"]).strip()) == 0:
+                    coeditorsCodCli[codCli][coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
@@ -65,28 +106,26 @@ def formaterDataCoeditions(dataCoeditions):
                         "MONEDA":str(record["MONEDA"]).strip(),
                         "COEDITOR": str(record["PROVEEDOR"]).strip(),
                     }]
+                else:
+                    coeditorsCodCli[codCli][coeditor] = [{
+                        "CODIGO": str(record["CODIGO"]).strip(),
+                        "TIPO":str(record["TIPO"]).strip(),
+                        "TITULO":str(record["TITULO"]).strip(),
+                        "EDICION":str(record["EDICION"]).strip(),
+                        "AUTOR":str(record["AUTOR"]).strip(),
+                        "PRECIO":str(record["PRECIO"]),
+                        "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                        "VALOR_BRUTO":totals["grossTotal"],
+                        "DESCUENTO":record["DESCTO"],
+                        "ISBN":str(record["ISBN"]),
+                        "SAP":str(record["SAP"]).strip(),
+                        "VALOR_NETO":totals["netTotal"],
+                        "MONEDA":str(record["MONEDA"]).strip(),
+                        "COEDITOR": str(record["PROVEEDOR"]).strip(),
+                    }]
             elif codCli in coeditorsCodCli and not coeditor in coeditorsCodCli[codCli]:
-                coeditorsCodCli[codCli][coeditor] = [{
-                    "CODIGO": str(record["CODIGO"]).strip(),
-                    "TIPO":str(record["TIPO"]).strip(),
-                    "TITULO":str(record["TITULO"]).strip(),
-                    "EDICION":str(record["EDICION"]).strip(),
-                    "AUTOR":str(record["AUTOR"]).strip(),
-                    "PRECIO":str(record["PRECIO"]),
-                    "CANTIDAD":str(record["CANTIDAD"]).strip(),
-                    "VALOR_BRUTO":totals["grossTotal"],
-                    "DESCUENTO":record["DESCTO"],
-                    "ISBN":str(record["ISBN"]),
-                    "VALOR_NETO":totals["netTotal"],
-                    "MONEDA":str(record["MONEDA"]).strip(),
-                    "COEDITOR": str(record["PROVEEDOR"]).strip()
-                }]
-
-                
-            elif codCli in coeditorsCodCli and coeditor in coeditorsCodCli[codCli]:
-                coeditorsCodCli[codCli][coeditor] = [
-                    *coeditorsCodCli[codCli][coeditor],
-                    {
+                if len(str(record["SAP"]).strip()) == 0:
+                    coeditorsCodCli[codCli][coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
@@ -99,9 +138,66 @@ def formaterDataCoeditions(dataCoeditions):
                         "ISBN":str(record["ISBN"]),
                         "VALOR_NETO":totals["netTotal"],
                         "MONEDA":str(record["MONEDA"]).strip(),
-                        "COEDITOR": str(record["PROVEEDOR"]).strip(),
-                    }
-                ]
+                        "COEDITOR": str(record["PROVEEDOR"]).strip()
+                    }]
+                else:
+                    coeditorsCodCli[codCli][coeditor] = [{
+                        "CODIGO": str(record["CODIGO"]).strip(),
+                        "TIPO":str(record["TIPO"]).strip(),
+                        "TITULO":str(record["TITULO"]).strip(),
+                        "EDICION":str(record["EDICION"]).strip(),
+                        "AUTOR":str(record["AUTOR"]).strip(),
+                        "PRECIO":str(record["PRECIO"]),
+                        "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                        "VALOR_BRUTO":totals["grossTotal"],
+                        "DESCUENTO":record["DESCTO"],
+                        "ISBN":str(record["ISBN"]),
+                        "SAP":str(record["SAP"]).strip(),
+                        "VALOR_NETO":totals["netTotal"],
+                        "MONEDA":str(record["MONEDA"]).strip(),
+                        "COEDITOR": str(record["PROVEEDOR"]).strip()
+                    }]
+
+            elif codCli in coeditorsCodCli and coeditor in coeditorsCodCli[codCli]:
+                if len(str(record["SAP"]).strip()) == 0:
+                    coeditorsCodCli[codCli][coeditor] = [
+                        *coeditorsCodCli[codCli][coeditor],
+                        {
+                            "CODIGO": str(record["CODIGO"]).strip(),
+                            "TIPO":str(record["TIPO"]).strip(),
+                            "TITULO":str(record["TITULO"]).strip(),
+                            "EDICION":str(record["EDICION"]).strip(),
+                            "AUTOR":str(record["AUTOR"]).strip(),
+                            "PRECIO":str(record["PRECIO"]),
+                            "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                            "VALOR_BRUTO":totals["grossTotal"],
+                            "DESCUENTO":record["DESCTO"],
+                            "ISBN":str(record["ISBN"]),
+                            "VALOR_NETO":totals["netTotal"],
+                            "MONEDA":str(record["MONEDA"]).strip(),
+                            "COEDITOR": str(record["PROVEEDOR"]).strip(),
+                        }
+                    ]
+                else:
+                    coeditorsCodCli[codCli][coeditor] = [
+                        *coeditorsCodCli[codCli][coeditor],
+                        {
+                            "CODIGO": str(record["CODIGO"]).strip(),
+                            "TIPO":str(record["TIPO"]).strip(),
+                            "TITULO":str(record["TITULO"]).strip(),
+                            "EDICION":str(record["EDICION"]).strip(),
+                            "AUTOR":str(record["AUTOR"]).strip(),
+                            "PRECIO":str(record["PRECIO"]),
+                            "CANTIDAD":str(record["CANTIDAD"]).strip(),
+                            "VALOR_BRUTO":totals["grossTotal"],
+                            "DESCUENTO":record["DESCTO"],
+                            "ISBN":str(record["ISBN"]),
+                            "SAP":str(record["SAP"]).strip(),
+                            "VALOR_NETO":totals["netTotal"],
+                            "MONEDA":str(record["MONEDA"]).strip(),
+                            "COEDITOR": str(record["PROVEEDOR"]).strip(),
+                        }
+                    ]
 
     return {
         "records": records,

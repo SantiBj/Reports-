@@ -9,7 +9,7 @@ from weasyprint import HTML,CSS
 #sacar total en un service
 #sacar calculate
 
-def createPdf(data,supplier,request):
+def createPdf(data,supplier,request,hasSap):
     #content pdf
     calculationsTotals = total(data)
     booksNegative = bookNegativeAndCalculationTotals(data)
@@ -22,7 +22,7 @@ def createPdf(data,supplier,request):
         "records":data,
         "moneda":data[0]["MONEDA"],
         "proveedor":data[0]["PROVEEDOR"],
-        "isSAP": True if "SAP" in data[0] else False,
+        "isSAP": hasSap,
         "totals":calculationsTotals,
         "booksNegative":booksNegative["books"],
         "hasNegatives":  True if len(booksNegative["books"]) > 0 else False,

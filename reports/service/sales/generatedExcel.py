@@ -6,14 +6,12 @@ from .formatedRecordForDictToTuple import formatedRecordForDictToTuple
 from ..share.printerDataInSheet import printerDataInSheet
 
 
-def generatedExcel(dataDict, cutNumber):
-    isUEX = True if "SAP" in dataDict[0] else False
-    # si es UEX usar otra plantilla y otro formateador
+def generatedExcel(dataDict, cutNumber,hasSap):
     dataInTuples = []
     for record in dataDict:
-        dataInTuples.append(formatedRecordForDictToTuple(record,isUEX))
+        dataInTuples.append(formatedRecordForDictToTuple(record,hasSap))
 
-    book = openpyxl.load_workbook("plantilla-UEX.xlsx" if isUEX else "plantilla-reporte-ventas.xlsx")
+    book = openpyxl.load_workbook("plantilla-UEX.xlsx" if hasSap else "plantilla-reporte-ventas.xlsx")
     sheet = book.worksheets[0]
 
     startRow = 5
@@ -29,7 +27,7 @@ def generatedExcel(dataDict, cutNumber):
     
 
     # calculo de total cantidad,bruto,neto
-    calculatedTotalsBySupplier(dataDict, sheet,isUEX)
+    calculatedTotalsBySupplier(dataDict, sheet,hasSap)
 
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')

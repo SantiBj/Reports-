@@ -36,6 +36,9 @@
                 <thead>
                     <tr class="">
                         <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Codigo</th>
+                        {% if isSAP %}
+                        <th style="width: 8%;border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">SAP</th>
+                        {% endif %}
                         <th style="width: 8%;border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Tipo</th>
                         <th style="width: 30%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Titulo</th>
                         <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Precio</th>
@@ -55,6 +58,9 @@
                         {% else %}
                         <tr style="font-size: 14px;">
                             <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.CODIGO }}</td>
+                            {% if isSAP %}
+                            <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.SAP }}</td>
+                            {% endif %}
                             <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.TIPO }}</td>
                             <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.ISBN }}-{{ record.TITULO }}-{{ record.EDICION }}-{{ record.AUTOR }}</td>
                             <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ record.PRECIO|floatformat:2 }}{% else %}{{ record.PRECIO|intcomma }}{% endif %}</td>
@@ -69,6 +75,9 @@
                     {% for record in records %}
                     <tr style="font-size: 14px;">
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.CODIGO }}</td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.SAP }}</td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.TIPO }}</td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.ISBN }}-{{ record.TITULO }}-{{ record.EDICION }}-{{ record.AUTOR }}</td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ record.PRECIO|floatformat:2 }}{% else %}{{ record.PRECIO|intcomma }}{% endif %}</td>
@@ -81,6 +90,9 @@
                     {% endif %}
                     <tr style="font-size: 14px;">
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
@@ -91,6 +103,9 @@
                     </tr>
                     <tr>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
@@ -101,6 +116,9 @@
                     </tr>
                     <tr>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
@@ -112,6 +130,9 @@
                     {% for book in booksNegative %}
                     <tr style="font-size: 14px;">
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.CODIGO }}</td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.SAP }}</td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.TIPO }}</td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.ISBN }}-{{ book.TITULO }}-{{ book.EDICION }}-{{ book.AUTOR }}</td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.PRECIO|floatformat:2 }}{% else %}{{ book.PRECIO|intcomma }}{% endif %}</td>
@@ -124,6 +145,9 @@
                     {% if hasNegatives %}
                     <tr style="font-size: 14px;">
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
@@ -136,6 +160,9 @@
                     {% if hasNegatives %}
                     <tr>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>

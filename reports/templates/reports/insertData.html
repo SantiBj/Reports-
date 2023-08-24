@@ -18,25 +18,27 @@
       <img class="w-[80px]" src="{% static 'img/logo.png' %}" />
     </nav>
     <section class="h-[80vh] w-full flex justify-center items-center">
-      <form enctype="multipart/form-data">
+      <form class="gap-[30px] flex flex-col justify-center items-center" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="flex flex-col w-fit">
-          <div id="help-visual" class="bg-green-400 p-[8px] rounded-md hidden">
+        <div class="flex gap-[20px] flex-col items-center">
+          <div id="help-visual" class="text-white bg-[#38bdf8] px-[70px] py-[8px] text-[15px] rounded-2xl hidden">
 
           </div>
-          <label class="hover:opacity-70 transition-all cursor-pointer"
+          <div class="py-[50px] px-[100px] border-dashed rounded-xl border-2 border-black">
+            <label class="hover:opacity-50 transition-all cursor-pointer"
             for="file-input">
-            <img class="select-none"
+            <img class="select-none w-[70px] opacity-70"
               src="https://cdn.iconscout.com/icon/free/png-256/free-upload-1439353-1214473.png?f=webp&w=256" />
             <input required id="file-input" class="hidden" name="file"
               class="border-green-700" type="file"
               accept=".DBF">
           </label>
+          </div>
         </div>
         <button
           id="btn-submit"
           type="button"
-          class="select-none transition-all rounded-md bg-red-500 text-white py-[5px] hover:bg-red-800 w-full disable">
+          class="select-none transition-all rounded-2xl bg-[#16a34a] text-white px-[110px] py-[5px] hover:opacity-70  disable">
           Generar
       </button>
         </div>

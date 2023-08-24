@@ -5,8 +5,7 @@ from weasyprint import HTML, CSS
 from django.http import HttpResponse
 
 
-def createPdf(data, cutNumber, request, codCli=False):
-
+def createPdf(data, cutNumber, request,hasSap, codCli=False):
     if codCli:
         # para calcular totales
         dataFull = []
@@ -26,10 +25,10 @@ def createPdf(data, cutNumber, request, codCli=False):
         newTotal = calculateTotalWithDataNegative(
             calculationsTotals, booksNegative)
         today = datetime.now().date()
-        print(dataFull[0]["MONEDA"] != "PESOS")
         html = render(request, "coeditors/coeditorPdf.html", {
             "records": dataWithNCut,
             "codCli": True,
+            "isSAP":hasSap,
             "moneda": dataFull[0]["MONEDA"],
             "totals": calculationsTotals,
             "booksNegative": booksNegative["books"],
@@ -54,6 +53,7 @@ def createPdf(data, cutNumber, request, codCli=False):
         html = render(request, "coeditors/coeditorPdf.html", {
             "records": data,
             "codCli": False,
+            "isSAP":hasSap,
             "moneda": data[0]["MONEDA"],
             "coeditor": data[0]["COEDITOR"],
             "totals": calculationsTotals,

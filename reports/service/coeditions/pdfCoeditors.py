@@ -32,6 +32,7 @@ def createPdf(data, cutNumber, request,hasSap, codCli=False):
             "moneda": dataFull[0]["MONEDA"],
             "totals": calculationsTotals,
             "booksNegative": booksNegative["books"],
+            "totalNeg":booksNegative,
             "hasNegatives": True if len(booksNegative["books"]) > 0 else False,
             "newsTotals": newTotal,
             "fecha": today
@@ -57,6 +58,7 @@ def createPdf(data, cutNumber, request,hasSap, codCli=False):
             "moneda": data[0]["MONEDA"],
             "coeditor": data[0]["COEDITOR"],
             "totals": calculationsTotals,
+            "booksNegative": booksNegative["books"],
             "booksNegative": booksNegative["books"],
             "hasNegatives": True if len(booksNegative["books"]) > 0 else False,
             "newsTotals": newTotal,

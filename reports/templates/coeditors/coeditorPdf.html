@@ -150,6 +150,35 @@
                         {% endif %}
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;">Total Devoluciones= </td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ totalNeg.quantity }}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totalNeg.grossTotal|floatformat:2 }}{% else %}{{ totalNeg.grossTotal|intcomma }}{% endif %}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totalNeg.netTotal|floatformat:2 }}{% else %}{{ totalNeg.netTotal|intcomma }}{% endif %}</td>
+                    </tr>
+                    {% endif %}
+                    {% if hasNegatives %}
+                    <tr>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    </tr>
+                    {% endif %}
+                    {% if hasNegatives %}
+                    <tr style="font-size: 14px;">
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        {% endif %}
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ newsTotals.quantity }}</td>
                         <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ newsTotals.grossTotal|floatformat:2 }}{% else %}{{ newsTotals.grossTotal|intcomma }}{% endif %}</td>

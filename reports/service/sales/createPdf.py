@@ -26,6 +26,7 @@ def createPdf(data,supplier,request,hasSap):
         "totals":calculationsTotals,
         "booksNegative":booksNegative["books"],
         "hasNegatives":  True if len(booksNegative["books"]) > 0 else False,
+        "totalNeg":booksNegative,
         "newsTotals":newTotalWithBooksNegatives,
         "cutNumber":supplier,
         "fecha": today
@@ -36,7 +37,7 @@ def createPdf(data,supplier,request,hasSap):
     pdf =HTML(string=html).write_pdf(stylesheets=[CSS(string='@page { size: landscape; }')])
     
     response = HttpResponse(pdf,content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename={data[0]["PROVEEDOR"][:3]}.pdf'
+    response['Content-Disposition'] = f'attachment; filename={data[0]["PROVEEDOR"]}.pdf'
 
     return response
     

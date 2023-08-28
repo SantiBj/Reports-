@@ -57,19 +57,32 @@ def calculatedTotalsBySupplier(recordsSupplier, sheet, isUEX):
                 sheet.cell(row=rowIndex, column=colIndex, value=value)
 
         endRecord = sheet.max_row+1
-        # creando cuadro de texto
+        # pintando el total de devoluciones
+        if not isUEX:
+            sheet.cell(row=endRecord, column=7, value="Devoluciones =")
+            sheet.cell(row=endRecord, column=8, value=bookNegative["quantity"])
+            sheet.cell(row=endRecord, column=9, value=bookNegative["grossTotal"])
+            sheet.cell(row=endRecord, column=11, value=bookNegative["netTotal"])
+        else:
+            sheet.cell(row=endRecord, column=8, value="Devoluciones =")
+            sheet.cell(row=endRecord, column=9, value=bookNegative["quantity"])
+            sheet.cell(row=endRecord, column=10, value=bookNegative["grossTotal"])
+            sheet.cell(row=endRecord, column=12, value=bookNegative["netTotal"])
+
 
         # pintando los nuevos totales
         results = calculateTotalWithDataNegative(totalV, bookNegative)
 
         if not isUEX:
-            sheet.cell(row=endRecord, column=8, value=results["quantity"])
-            sheet.cell(row=endRecord, column=9, value=results["grossTotal"])
-            sheet.cell(row=endRecord, column=11, value=results["netTotal"])
+            sheet.cell(row=endRecord+2, column=7, value="Total =")
+            sheet.cell(row=endRecord+2, column=8, value=results["quantity"])
+            sheet.cell(row=endRecord+2, column=9, value=results["grossTotal"])
+            sheet.cell(row=endRecord+2, column=11, value=results["netTotal"])
         else:
-            sheet.cell(row=endRecord, column=9, value=results["quantity"])
-            sheet.cell(row=endRecord, column=10, value=results["grossTotal"])
-            sheet.cell(row=endRecord, column=12, value=results["netTotal"])
+            sheet.cell(row=endRecord+2, column=8, value="Total =")
+            sheet.cell(row=endRecord+2, column=9, value=results["quantity"])
+            sheet.cell(row=endRecord+2, column=10, value=results["grossTotal"])
+            sheet.cell(row=endRecord+2, column=12, value=results["netTotal"])
 
         createChartText(sheet, isUEX)
 

@@ -20,7 +20,7 @@ def generatedExcel(dataDict, cutNumber,hasSap):
     # añadiendo cabecera
     sheet.cell(row=2, column=2, value=f"Proveedor: {dataDict[0]['PROVEEDOR']}")
     sheet.cell(row=3, column=2,
-               value=f"Periodo: {datetime.now().date()}     N° corte: {cutNumber}")
+               value=f"Periodo: {dataDict[0]['FECHA']}     N° corte: {cutNumber}")
 
     #añadiendo registros al excel
     printerDataInSheet(dataInTuples,startRow,startCol,sheet)
@@ -29,8 +29,10 @@ def generatedExcel(dataDict, cutNumber,hasSap):
     # calculo de total cantidad,bruto,neto
     calculatedTotalsBySupplier(dataDict, sheet,hasSap)
 
+    date = dataDict[0]["FECHA"].split('-')
+
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = f'attachment; filename={dataDict[0]["PROVEEDOR"]}.xlsx'
+    response['Content-Disposition'] = f'attachment; filename={dataDict[0]["PROVEEDOR"][:3]}-{date[4]}_{date[3]}.xlsx'
     book.save(response)
     return response

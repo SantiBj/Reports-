@@ -14,9 +14,7 @@ def createPdf(data,supplier,request,hasSap):
     calculationsTotals = total(data)
     booksNegative = bookNegativeAndCalculationTotals(data)
     newTotalWithBooksNegatives = calculateTotalWithDataNegative(calculationsTotals,booksNegative)
-    today = datetime.now().date()
     #pasando el tipo de monedad para realizar validaciones en la plantilla
-
   
     html = render(request,'reports/reportPdf.html',{
         "records":data,
@@ -29,15 +27,17 @@ def createPdf(data,supplier,request,hasSap):
         "totalNeg":booksNegative,
         "newsTotals":newTotalWithBooksNegatives,
         "cutNumber":supplier,
-        "fecha": today
+        "fecha": data[0]["FECHA"]
     }).content.decode('utf-8')
     
     #return html
    
     pdf =HTML(string=html).write_pdf(stylesheets=[CSS(string='@page { size: landscape; }')])
     
+    date = data[0]["FECHA"].split('-')
+
     response = HttpResponse(pdf,content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename={data[0]["PROVEEDOR"]}.pdf'
+    response['Content-Disposition'] = f'attachment; filename={data[0]["PROVEEDOR"][:3]}-{date[4]}_{date[3]}.pdf'
 
     return response
     

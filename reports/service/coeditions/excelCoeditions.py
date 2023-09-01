@@ -9,7 +9,8 @@ from ..share.calculatedTotals import calculateTotalWithDataNegative, bookNegativ
 from .printers import printerTotalNegatives
 from .booksNegToTuple import booksNegToTuple
 
-
+#TODO
+#fecha 
 def excelCoeditions(dataEditions, cutNumber, hasSap, codCli=False):
     book = openpyxl.load_workbook(
         "coeSap.xlsx" if hasSap else "coediciones.xlsx")

@@ -19,7 +19,7 @@ def formatterDataSales(dataSales):
             if len(str(recordSale["SAP"]).strip()) == 0:
                 records[num] = [{
                     "CODIGO": str(recordSale["CODIGO"]).strip(),
-                    "FECHA":f"{str(recordSale['DESDE']).strip()} / {str(recordSale['HASTA']).strip()}",
+                    "FECHA":f"{str(recordSale['DESDE']).strip()} - {str(recordSale['HASTA']).strip()}",
                     "ISBN":str(recordSale["ISBN"]).strip(),
                     "IDBARRAS":str(recordSale["IDBARRAS"]).strip(),
                     "TITULO":str(recordSale["TITULO"]).strip(),
@@ -36,7 +36,7 @@ def formatterDataSales(dataSales):
             else:
                 records[num] = [{
                     "CODIGO": str(recordSale["CODIGO"]).strip(),
-                    "FECHA":f"{str(recordSale['DESDE']).strip()}-{str(recordSale['HASTA']).strip()}",
+                    "FECHA":f"{str(recordSale['DESDE']).strip()} - {str(recordSale['HASTA']).strip()}",
                     "ISBN":str(recordSale["ISBN"]).strip(),
                     "IDBARRAS":str(recordSale["IDBARRAS"]).strip(),
                     "TITULO":str(recordSale["TITULO"]).strip(),
@@ -55,14 +55,13 @@ def formatterDataSales(dataSales):
         else:
             dataKey = records[num]
 
-            if str(recordSale["PROVEEDOR"]).strip()[:3] == "UEX":
+            if len(str(recordSale["SAP"]).strip()) == 0:
                 records[num] = [
                     *dataKey,
                     {
                         "CODIGO": str(recordSale["CODIGO"]).strip(),
-                        "FECHA":f"{str(recordSale['DESDE']).strip()}-{str(recordSale['HASTA']).strip()}",
+                        "FECHA":f"{str(recordSale['DESDE']).strip()} - {str(recordSale['HASTA']).strip()}",
                         "ISBN":str(recordSale["ISBN"]).strip(),
-                        "SAP":str(recordSale["SAP"]).strip(),
                         "IDBARRAS":str(recordSale["IDBARRAS"]).strip(),
                         "TITULO":str(recordSale["TITULO"]).strip(),
                         "EDICION":str(recordSale["EDICION"]).strip(),
@@ -81,10 +80,11 @@ def formatterDataSales(dataSales):
                     *dataKey,
                     {
                         "CODIGO": str(recordSale["CODIGO"]).strip(),
-                        "FECHA":f"{str(recordSale['DESDE']).strip()}-{str(recordSale['HASTA']).strip()}",
+                        "FECHA":f"{str(recordSale['DESDE']).strip()} - {str(recordSale['HASTA']).strip()}",
                         "ISBN":str(recordSale["ISBN"]).strip(),
                         "IDBARRAS":str(recordSale["IDBARRAS"]).strip(),
                         "TITULO":str(recordSale["TITULO"]).strip(),
+                        "SAP":str(recordSale["SAP"]).strip(),
                         "EDICION":str(recordSale["EDICION"]).strip(),
                         "AUTOR":str(recordSale["AUTOR"]).strip(),
                         "PRECIO":recordSale["PRECIO"],

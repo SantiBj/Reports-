@@ -1,4 +1,4 @@
-def formatedRecordForDictToTuple(record, isUEX):
+def formatedRecordForDictToTuple(record, hasSap):
     return (
         record["CODIGO"],
         record["ISBN"],
@@ -12,7 +12,7 @@ def formatedRecordForDictToTuple(record, isUEX):
         record["VALOR_BRUTO"],
         record["DESCUENTO"],
         record["VALOR_NETO"]
-    ) if isUEX else (
+    ) if hasSap else (
         record["CODIGO"],
         record["ISBN"],
         record["IDBARRAS"],

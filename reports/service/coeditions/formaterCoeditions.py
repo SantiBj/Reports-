@@ -16,7 +16,7 @@ def formaterDataCoeditions(dataCoeditions):
                     records[coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
                         "TIPO":str(record["TIPO"]).strip(),
-                        "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                        "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                         "TITULO":str(record["TITULO"]).strip(),
                         "EDICION":str(record["EDICION"]).strip(),
                         "AUTOR":str(record["AUTOR"]).strip(),
@@ -32,7 +32,7 @@ def formaterDataCoeditions(dataCoeditions):
                 else:
                     records[coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
-                        "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                        "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                         "TIPO":str(record["TIPO"]).strip(),
                         "SAP":str(record["SAP"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
@@ -54,7 +54,7 @@ def formaterDataCoeditions(dataCoeditions):
                         *oldRecordsCoeditor,
                         {
                             "CODIGO": str(record["CODIGO"]).strip(),
-                            "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                            "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                             "TIPO":str(record["TIPO"]).strip(),
                             "TITULO":str(record["TITULO"]).strip(),
                             "EDICION":str(record["EDICION"]).strip(),
@@ -74,7 +74,7 @@ def formaterDataCoeditions(dataCoeditions):
                         *oldRecordsCoeditor,
                         {
                             "CODIGO": str(record["CODIGO"]).strip(),
-                            "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                            "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                             "TIPO":str(record["TIPO"]).strip(),
                             "TITULO":str(record["TITULO"]).strip(),
                             "EDICION":str(record["EDICION"]).strip(),
@@ -97,7 +97,7 @@ def formaterDataCoeditions(dataCoeditions):
                 if len(str(record["SAP"]).strip()) == 0:
                     coeditorsCodCli[codCli][coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
-                        "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                        "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
                         "EDICION":str(record["EDICION"]).strip(),
@@ -114,7 +114,7 @@ def formaterDataCoeditions(dataCoeditions):
                 else:
                     coeditorsCodCli[codCli][coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
-                        "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                        "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
                         "EDICION":str(record["EDICION"]).strip(),
@@ -133,7 +133,7 @@ def formaterDataCoeditions(dataCoeditions):
                 if len(str(record["SAP"]).strip()) == 0:
                     coeditorsCodCli[codCli][coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
-                        "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                        "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
                         "EDICION":str(record["EDICION"]).strip(),
@@ -150,7 +150,7 @@ def formaterDataCoeditions(dataCoeditions):
                 else:
                     coeditorsCodCli[codCli][coeditor] = [{
                         "CODIGO": str(record["CODIGO"]).strip(),
-                        "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                        "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                         "TIPO":str(record["TIPO"]).strip(),
                         "TITULO":str(record["TITULO"]).strip(),
                         "EDICION":str(record["EDICION"]).strip(),
@@ -172,7 +172,7 @@ def formaterDataCoeditions(dataCoeditions):
                         *coeditorsCodCli[codCli][coeditor],
                         {
                             "CODIGO": str(record["CODIGO"]).strip(),
-                            "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                            "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                             "TIPO":str(record["TIPO"]).strip(),
                             "TITULO":str(record["TITULO"]).strip(),
                             "EDICION":str(record["EDICION"]).strip(),
@@ -192,7 +192,7 @@ def formaterDataCoeditions(dataCoeditions):
                         *coeditorsCodCli[codCli][coeditor],
                         {
                             "CODIGO": str(record["CODIGO"]).strip(),
-                            "FECHA":f"{str(record['DESDE']).strip()}-{str(record['HASTA']).strip()}",
+                            "FECHA":f"{str(record['DESDE']).strip()} - {str(record['HASTA']).strip()}",
                             "TIPO":str(record["TIPO"]).strip(),
                             "TITULO":str(record["TITULO"]).strip(),
                             "EDICION":str(record["EDICION"]).strip(),

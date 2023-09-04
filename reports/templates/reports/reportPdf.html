@@ -62,18 +62,7 @@
                     <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ record.VALOR_NETO|floatformat:2 }}{% else %}{{ record.VALOR_NETO|intcomma }}{% endif %}</td>
                 </tr>
                 {% endfor %}
-                <tr style="font-size: 14px;">
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalQuantity|floatformat:2 }}{% else %}{{ totals.totalQuantity|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalGrossValue|floatformat:2 }}{% else %}{{ totals.totalGrossValue|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalNetValue|floatformat:2 }}{% else %}{{ totals.totalNetValue|intcomma }}{% endif %}</td>
-                </tr>
+               
                 <tr>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                     {% if isSAP %}
@@ -112,20 +101,18 @@
                     <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.VALOR_NETO|floatformat:2 }}{% else %}{{ book.VALOR_NETO|intcomma }}{% endif %}</td>
                 </tr>
                 {% endfor %}
-                {% if hasNegatives %}
                 <tr style="font-size: 14px;">
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                     {% if isSAP %}
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                     {% endif %}
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">Total Devoluciones= </td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ totalNeg.quantity }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totalNeg.grossTotal|floatformat:2 }}{% else %}{{ totalNeg.grossTotal|intcomma }}{% endif %}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
+                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalQuantity|floatformat:2 }}{% else %}{{ totals.totalQuantity|intcomma }}{% endif %}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalGrossValue|floatformat:2 }}{% else %}{{ totals.totalGrossValue|intcomma }}{% endif %}</td>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totalNeg.netTotal|floatformat:2 }}{% else %}{{ totalNeg.netTotal|intcomma }}{% endif %}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalNetValue|floatformat:2 }}{% else %}{{ totals.totalNetValue|intcomma }}{% endif %}</td>
                 </tr>
-                {% endif %}
                 {% if hasNegatives %}
                 <tr>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
@@ -138,20 +125,6 @@
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
                     <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                </tr>
-                {% endif %}
-                {% if hasNegatives %}
-                <tr style="font-size: 14px;">
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ newsTotals.quantity }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ newsTotals.grossTotal|floatformat:2 }}{% else %}{{ newsTotals.grossTotal|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ newsTotals.netTotal|floatformat:2 }}{% else %}{{ newsTotals.netTotal|intcomma }}{% endif %}</td>
                 </tr>
                 {% endif %}
                 {% if hasNegatives %}

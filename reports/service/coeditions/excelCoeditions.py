@@ -9,8 +9,7 @@ from ..share.calculatedTotals import calculateTotalWithDataNegative, bookNegativ
 from .printers import printerTotalNegatives
 from .booksNegToTuple import booksNegToTuple
 
-#TODO
-#fecha 
+
 def excelCoeditions(dataEditions, cutNumber, hasSap, codCli=False):
     book = openpyxl.load_workbook(
         "coeSap.xlsx" if hasSap else "coediciones.xlsx")
@@ -21,8 +20,10 @@ def excelCoeditions(dataEditions, cutNumber, hasSap, codCli=False):
 
     if codCli:
         recordsCodCli = []
+        firstKey = list(dataEditions.keys())[0]
 
-        sheet.cell(row=3, column=2, value=f"Periodo: {datetime.now().date()}")
+        sheet.cell(row=3, column=2,
+                   value=f"Periodo: {dataEditions[firstKey][0]['FECHA']}")
         for nCutCodCli in dataEditions.keys():
             # pinta la cabecera
             sheet.cell(row=startRow, column=1,
@@ -38,30 +39,26 @@ def excelCoeditions(dataEditions, cutNumber, hasSap, codCli=False):
             printerDataInSheet(dataCoeditor, startRow, startCol, sheet)
             startRow = startRow + elements + 1
 
-        # total sin negativos
-        totalsCodCli = total(recordsCodCli)
-        printerTotal(sheet, totalsCodCli, hasSap)
-
-        # total negativos
+        # libros negativos
         totalsNegatives = bookNegativeAndCalculationTotals(recordsCodCli)
         if len(totalsNegatives["books"]) > 0:
             endRow = sheet.max_row+3
 
-            # total negatives
+            # libros devoluciones
             printerDataInSheet(booksNegToTuple(
                 totalsNegatives, hasSap), endRow, 1, sheet)
             endRow = sheet.max_row+1
-            printerTotalNegatives(totalsNegatives, sheet, endRow, hasSap)
 
-            # total con negativos
-            endRow = sheet.max_row+3
-            fullTotal = calculateTotalWithDataNegative(
-                totalsCodCli, totalsNegatives)
-            printerTotalNegatives(fullTotal, sheet, endRow,hasSap)
+        # total
+        endRow = sheet.max_row+3
+        totalsCodCli = total(recordsCodCli)
+        printerTotal(sheet, totalsCodCli, hasSap)
+
+        dateOfFile = dataEditions[firstKey][0]['FECHA'].split('-')
 
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = f'attachment; filename=COED-{dataEditions[nCutCodCli][0]["COEDITOR"][:30]}.xlsx'
+        response['Content-Disposition'] = f'attachment; filename={dataEditions[nCutCodCli][0]["COEDITOR"][4:30]}{dateOfFile[4]}_{dateOfFile[3]}.xlsx'
         book.save(response)
         return response
 
@@ -71,32 +68,26 @@ def excelCoeditions(dataEditions, cutNumber, hasSap, codCli=False):
             dataInTuples.append(formatedFromDictToTuple(record, hasSap))
         sheet.cell(row=2, column=2, value=dataEditions[0]["COEDITOR"])
         sheet.cell(
-            row=3, column=2, value=f"Periodo: {datetime.now().date()}     N° corte: {cutNumber}")
+            row=3, column=2, value=f"Periodo: {dataEditions[0]['FECHA']}     N° corte: {cutNumber}")
         printerDataInSheet(dataInTuples, startRow, startCol, sheet)
 
-        # total sin negativos
-        totalsCoeditor = total(dataEditions)
-        printerTotal(sheet, totalsCoeditor, hasSap)
-
-        # calculo y pintar negativos
+        # libros negativos
         totalsNegatives = bookNegativeAndCalculationTotals(dataEditions)
         if len(totalsNegatives['books']) > 0:
             endRow = sheet.max_row + 2
-
             # total negativos
             printerDataInSheet(booksNegToTuple(
-                totalsNegatives,hasSap), endRow, 1, sheet)
+                totalsNegatives, hasSap), endRow, 1, sheet)
             endRow = endRow = sheet.max_row+1
-            printerTotalNegatives(totalsNegatives, sheet, endRow, hasSap)
 
-            # total con negativos
-            endRow = sheet.max_row+3
-            fullTotal = calculateTotalWithDataNegative(
-                totalsCoeditor, totalsNegatives)
-            printerTotalNegatives(fullTotal, sheet, endRow, hasSap)
+         # total sin negativos
+        totalsCoeditor = total(dataEditions)
+        printerTotal(sheet, totalsCoeditor, hasSap)
+
+        dateOfFile = dataEditions[0]['FECHA'].split('-')
 
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = f'attachment; filename=COED-{dataEditions[0]["COEDITOR"]}.xlsx'
+        response['Content-Disposition'] = f'attachment; filename={dataEditions[0]["COEDITOR"][4:30]}{dateOfFile[4]}_{dateOfFile[3]}.xlsx'
         book.save(response)
         return response

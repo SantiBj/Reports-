@@ -6,28 +6,41 @@ from .formatedRecordForDictToTuple import formatedRecordForDictToTuple
 from ..share.printerDataInSheet import printerDataInSheet
 
 
-def generatedExcel(dataDict, cutNumber,hasSap):
-    dataInTuples = []
-    for record in dataDict:
-        dataInTuples.append(formatedRecordForDictToTuple(record,hasSap))
+def generatedExcel(dataDict, cutNumber, hasSap):
+    book = None
+    if hasSap:
+        if dataDict[0]["MONEDA"] != "PESOS":
+            book = openpyxl.load_workbook("plantilla-UEX.xlsx")
+        else:
+            book = openpyxl.load_workbook("plantilla-UEX_COP.xlsx")
+    else:
+        if dataDict[0]["MONEDA"] != "PESOS":
+            book = openpyxl.load_workbook("plantilla-reporte-ventas.xlsx")
+        else:
+            book = openpyxl.load_workbook("plantilla-reporte-ventas_COP.xlsx")
 
-    book = openpyxl.load_workbook("plantilla-UEX.xlsx" if hasSap else "plantilla-reporte-ventas.xlsx")
     sheet = book.worksheets[0]
 
     startRow = 5
     startCol = 1
 
     # añadiendo cabecera
-    sheet.cell(row=2, column=2, value=f"Proveedor: {dataDict[0]['PROVEEDOR']}")
+    sheet.cell(row=2, column=2,
+               value=f"Proveedor: {dataDict[0]['PROVEEDOR']}           Elaborado:{dataDict[0]['ELABORADO']}")
     sheet.cell(row=3, column=2,
-               value=f"Periodo: {dataDict[0]['FECHA']}     N° corte: {cutNumber}")
+               value=f"Periodo: {dataDict[0]['FECHA']}     N° corte: {cutNumber}        Moneda: {dataDict[0]['MONEDA']}")
 
-    #añadiendo registros al excel
-    printerDataInSheet(dataInTuples,startRow,startCol,sheet)
-    
+    # añadiendo datos positivos
+    dataPositive = []
+    dataPositiveTup =[]
+    for data in dataDict:
+        if data["CANTIDAD"] > 0:
+            dataPositive.append(data)
+            dataPositiveTup.append(formatedRecordForDictToTuple(data,hasSap))
+    printerDataInSheet(dataPositiveTup, startRow, startCol, sheet)
 
     # calculo de total cantidad,bruto,neto
-    calculatedTotalsBySupplier(dataDict, sheet,hasSap)
+    calculatedTotalsBySupplier(dataPositive,dataDict, sheet, hasSap)
 
     date = dataDict[0]["FECHA"].split('-')
 

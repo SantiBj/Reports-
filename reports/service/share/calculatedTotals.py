@@ -1,5 +1,5 @@
 from ..sales.formatedRecordForDictToTuple import formatedRecordForDictToTuple
-from decimal import Decimal
+from ..sales.resaltData import resaltDta
 
 # suma total bruto, total neto y cantidad de todos los libros del proveedor
 
@@ -21,15 +21,35 @@ def total(recordsSupplier):
     }
 
 # sales
-def calculatedTotalsBySupplier(recordsSupplier, sheet, isUEX):
-    totalV = total(recordsSupplier)
+
+
+def calculatedTotalsBySupplier(booksPositives, allBooks, sheet, isUEX):
+    totalPositives = total(booksPositives)
     endRecord = sheet.max_row+2
+
+    # total solo positivo
+    resaltDta(sheet, isUEX, endRecord)
+    if isUEX:
+        sheet.cell(row=endRecord, column=8, value="Subtotal ventas =")
+        sheet.cell(row=endRecord, column=9,
+                   value=totalPositives["totalQuantity"])
+        sheet.cell(row=endRecord, column=10,
+                   value=totalPositives["totalGrossValue"])
+        sheet.cell(row=endRecord, column=12,
+                   value=totalPositives["totalNetValue"])
+    else:
+        sheet.cell(row=endRecord, column=7, value="Subtotal ventas =")
+        sheet.cell(row=endRecord, column=8,
+                   value=totalPositives["totalQuantity"])
+        sheet.cell(row=endRecord, column=9,
+                   value=totalPositives["totalGrossValue"])
+        sheet.cell(row=endRecord, column=11,
+                   value=totalPositives["totalNetValue"])
 
     # libros negativos
     endRecord = sheet.max_row+3
-    bookNegative = bookNegativeAndCalculationTotals(recordsSupplier)
+    bookNegative = bookNegativeAndCalculationTotals(allBooks)
 
-    #
     if len(bookNegative["books"]) > 0:
         booksWithQuantityNegativeTuple = []
 
@@ -44,30 +64,60 @@ def calculatedTotalsBySupplier(recordsSupplier, sheet, isUEX):
                 sheet.cell(row=rowIndex, column=colIndex, value=value)
 
         endRecord = sheet.max_row+1
+        # total devoluciones
+        resaltDta(sheet, isUEX, endRecord)
+        if isUEX:
+            sheet.cell(row=endRecord, column=8,
+                       value="Subtotal devoluciones =")
+            sheet.cell(row=endRecord, column=9,
+                       value=bookNegative["quantity"])
+            sheet.cell(row=endRecord, column=10,
+                       value=bookNegative["grossTotal"])
+            sheet.cell(row=endRecord, column=12,
+                       value=bookNegative["netTotal"])
+        else:
+            sheet.cell(row=endRecord, column=7,
+                       value="Subtotal devoluciones =")
+            sheet.cell(row=endRecord, column=8,
+                       value=bookNegative["quantity"])
+            sheet.cell(row=endRecord, column=9,
+                       value=bookNegative["grossTotal"])
+            sheet.cell(row=endRecord, column=11,
+                       value=bookNegative["netTotal"])
 
-    if isUEX:
-        sheet.cell(row=endRecord, column=8, value="Total =")
-        sheet.cell(row=endRecord, column=9, value=totalV["totalQuantity"])
-        sheet.cell(row=endRecord, column=10, value=totalV["totalGrossValue"])
-        sheet.cell(row=endRecord, column=12, value=totalV["totalNetValue"])
-    else:
-        sheet.cell(row=endRecord, column=7, value="Total =")
-        sheet.cell(row=endRecord, column=8, value=totalV["totalQuantity"])
-        sheet.cell(row=endRecord, column=9, value=totalV["totalGrossValue"])
-        sheet.cell(row=endRecord, column=11, value=totalV["totalNetValue"])
+        endRecord = sheet.max_row+2
+
+        # total sumando negativos y positivos
+        endTotal = calculateTotalWithDataNegative(totalPositives, bookNegative)
+        resaltDta(sheet, isUEX, endRecord)
+        if isUEX:
+            sheet.cell(row=endRecord, column=8, value="Total =")
+            sheet.cell(row=endRecord, column=9,
+                       value=endTotal["quantity"])
+            sheet.cell(row=endRecord, column=10,
+                       value=endTotal["grossTotal"])
+            sheet.cell(row=endRecord, column=12,
+                       value=endTotal["netTotal"])
+        else:
+            sheet.cell(row=endRecord, column=7, value="Total =")
+            sheet.cell(row=endRecord, column=8,
+                       value=endTotal["quantity"])
+            sheet.cell(row=endRecord, column=9,
+                       value=endTotal["grossTotal"])
+            sheet.cell(row=endRecord, column=11,
+                       value=endTotal["netTotal"])
 
     if len(bookNegative["books"]) > 0:
         createChartText(sheet, isUEX)
 
+
 # realiza el calculo de la suma de libros vendidos
 # con libros devueltos
-
-
 def calculateTotalWithDataNegative(total, totalNegatives):
     return {
-        "quantity": total["totalQuantity"]+abs(totalNegatives["quantity"]),
-        "grossTotal": total["totalGrossValue"]+abs(totalNegatives["grossTotal"]),
-        "netTotal": total["totalNetValue"]+abs(totalNegatives["netTotal"]),
+        "quantity": total["totalQuantity"]+totalNegatives["quantity"],
+        "grossTotal": total["totalGrossValue"]+totalNegatives["grossTotal"],
+        "netTotal": total["totalNetValue"]+totalNegatives["netTotal"],
     }
 
 # suma de total bruto, total neto y cantidad de libros devueltos

@@ -1,8 +1,6 @@
-from decimal import Decimal
-
 def totalRecord(record):
-    grossTotal = Decimal(record["PRECIO"]) * Decimal(record["CANTIDAD"])
-    totalDiscount = grossTotal * (Decimal(record["DESCTO"]) / 100)
+    grossTotal = record["PRECIO"] * record["CANTIDAD"]
+    totalDiscount = grossTotal * (record["DESCTO"] / 100)
     netTotal = grossTotal - totalDiscount 
 
     return {

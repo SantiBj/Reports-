@@ -1,10 +1,10 @@
 import openpyxl
 from django.http import HttpResponse
-from ..share.calculatedTotals import calculatedTotalsBySupplier
+from ..share.calculatedTotals import printerTotalBooksAndDevolutions
 from datetime import datetime
 from .formatedRecordForDictToTuple import formatedRecordForDictToTuple
 from ..share.printerDataInSheet import printerDataInSheet
-
+from .bookWithoutDevolutions import bookWithoutDevolutions
 
 def generatedExcel(dataDict, cutNumber, hasSap):
     book = None
@@ -30,17 +30,13 @@ def generatedExcel(dataDict, cutNumber, hasSap):
     sheet.cell(row=3, column=2,
                value=f"Periodo: {dataDict[0]['FECHA']}     N° corte: {cutNumber}        Moneda: {dataDict[0]['MONEDA']}")
 
-    # añadiendo datos positivos
-    dataPositive = []
-    dataPositiveTup =[]
-    for data in dataDict:
-        if data["CANTIDAD"] > 0:
-            dataPositive.append(data)
-            dataPositiveTup.append(formatedRecordForDictToTuple(data,hasSap))
-    printerDataInSheet(dataPositiveTup, startRow, startCol, sheet)
+    # extrayendo los libros sin las devoluciones
+    books = bookWithoutDevolutions(dataDict,hasSap)
+    printerDataInSheet(books["booksTup"], startRow, startCol, sheet)
 
-    # calculo de total cantidad,bruto,neto
-    calculatedTotalsBySupplier(dataPositive,dataDict, sheet, hasSap)
+    # añadiendo los totales al excel tanto libros como devoluciones
+    printerTotalBooksAndDevolutions(
+        books["booksDict"], dataDict, sheet, hasSap)
 
     date = dataDict[0]["FECHA"].split('-')
 
@@ -49,3 +45,6 @@ def generatedExcel(dataDict, cutNumber, hasSap):
     response['Content-Disposition'] = f'attachment; filename={dataDict[0]["PROVEEDOR"][:3]}{date[4]}_{date[3]}.xlsx'
     book.save(response)
     return response
+
+
+

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from ..share.calculatedTotals import total, bookNegativeAndCalculationTotals
+from .bookWithoutDevolutions import bookWithoutDevolutions
+from ..share.calculatedTotals import calculateTotalWithDataNegative, total, bookNegativeAndCalculationTotals
 from weasyprint import HTML, CSS
 
 
@@ -9,26 +10,34 @@ from weasyprint import HTML, CSS
 
 def createPdf(data, supplier, request, hasSap):
     # content pdf
-    calculationsTotals = total(data)
+    booksWithoutDevolutions = bookWithoutDevolutions(data, hasSap)
+    Tbooks = total(booksWithoutDevolutions["booksDict"])
     booksNegative = bookNegativeAndCalculationTotals(data)
+    totalN = calculateTotalWithDataNegative(Tbooks, booksNegative)
     # pasando el tipo de monedad para realizar validaciones en la plantilla
 
     html = render(request, 'reports/reportPdf.html', {
-        "records": data,
+        "books": booksWithoutDevolutions["booksDict"],
         "moneda": data[0]["MONEDA"],
         "proveedor": data[0]["PROVEEDOR"],
+        "maked": data[0]["ELABORADO"],
         "isSAP": hasSap,
-        "totals": calculationsTotals,
-        "booksNegative": booksNegative["books"],
+        "Tbooks": Tbooks,
+        "devolutions": booksNegative,
         "hasNegatives":  True if len(booksNegative["books"]) > 0 else False,
         "cutNumber": supplier,
+        "total": totalN,
         "fecha": data[0]["FECHA"]
     }).content.decode('utf-8')
 
     # return html
-
-    pdf = HTML(string=html).write_pdf(
-        stylesheets=[CSS(string='@page { size: landscape; }')])
+    html = HTML(string=html)
+    css = CSS(string='''@page { size: landscape;  margin:100px; 
+                         @bottom-right { content: "Página " counter(page) " de " counter(pages);font-size:10px;};
+                            @bottom-center { content: "Carrera 31A No. 25B-50 Bogotá - Colombia  |  https://libreriasiglo.com/  |   e-mail: contabilidad@somossiglo.com  |  PBX: (571) 337 77 00"; font-size: 10px; }
+                         ''')
+    
+    pdf = html.write_pdf(stylesheets=[css])
 
     date = data[0]["FECHA"].split('-')
 

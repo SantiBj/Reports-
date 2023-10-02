@@ -1,7 +1,8 @@
 from .fromDictToTuple import formatedFromDictToTuple
 
-def booksNegToTuple(books,hasSap):
+def booksNegToTuple(books,hasSap,booksCalculate=False):
     tuplesNegatives = []
-    for bookNegative in books['books']:
+    booksToFormatter = books if booksCalculate else books['books']
+    for bookNegative in booksToFormatter:
         tuplesNegatives.append(formatedFromDictToTuple(bookNegative,hasSap))
     return tuplesNegatives

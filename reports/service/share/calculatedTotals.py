@@ -1,6 +1,7 @@
 from ..sales.formatedRecordForDictToTuple import formatedRecordForDictToTuple
 from ..sales.resaltData import resaltDta
 from ..sales.printTotal import printTotal
+from ..share.infDataNegative import createChartText
 
 # suma total bruto, total neto y cantidad de todos los libros del proveedor
 
@@ -99,14 +100,4 @@ def bookNegativeAndCalculationTotals(recordsSupplier):
     }
 
 
-def createChartText(sheet, isUEX):
-    endRecord = sheet.max_row+3
-    text = '''NOTA: Los valores negativos en la columna CANTIDAD\n
-            corresponden a devoluciones en ventas  reportadas\n
-            por nuestros clientes durante el periodo en referencia,\n
-            por tanto solicitamos a ustedes se sirva expedir\n
-            la correspondiente nota crédito y cargar al inventario\n
-            de Siglo del Hombre dichas cantidades.'''
 
-    sheet.cell(row=endRecord, column=5 if isUEX else 4, value=text)
-    sheet.row_dimensions[endRecord].height = 150

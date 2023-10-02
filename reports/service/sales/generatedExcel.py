@@ -42,7 +42,7 @@ def generatedExcel(dataDict, cutNumber, hasSap):
 
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = f'attachment; filename={dataDict[0]["PROVEEDOR"][:3]}{date[4]}_{date[3]}.xlsx'
+    response['Content-Disposition'] = f'attachment; filename={dataDict[0]["PROVEEDOR"][:3]}{date[4]}_{date[3]}-{cutNumber}.xlsx'
     book.save(response)
     return response
 

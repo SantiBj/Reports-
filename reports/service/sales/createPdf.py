@@ -42,6 +42,6 @@ def createPdf(data, supplier, request, hasSap):
     date = data[0]["FECHA"].split('-')
 
     response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename={data[0]["PROVEEDOR"][:3]}{date[4]}_{date[3]}.pdf'
+    response['Content-Disposition'] = f'attachment; filename={data[0]["PROVEEDOR"][:3]}{date[4]}_{date[3]}_{supplier}.pdf'
 
     return response

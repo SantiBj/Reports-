@@ -2,157 +2,212 @@
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
+
+<head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
-  </head>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <body>
-   <main>
-    <nav>
-        <div style="display: flex;width: 100%;"> 
-            <section style="width: 30%; display: flex;justify-content: center;align-items: center;border-bottom: 2px;border-color: red;">
-                <img style="width: 80px;" src="data:image/png;base64,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"/>
-            </section>
-            <section style="width: 70%;">
-                <div style="background: #e5e7eb;padding: 30px;width: full;
-                text-align: center;font-weight: 500;">
-                        REPORTE DE VENTAS POR REFERENCIA
-                        SIGLO DEL HOMBRE EDITORES S.
-                        NIT. 800.154.368-8
+</head>
+<body style="font-size: 11px;">
+    <main>
+        <table>
+            <thead style="font-size: 12px;">
+                <div style="width: 100%">
+                    <tr>
+                        <th style="width: 25%; text-align: center;">
+                            <h3><img style="width: 80px;" src="data:image/png;base64,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"/></h3>
+                        </th>
+                        <th colspan="9" style="width: 75%;">
+                            <div style="background: #e5e7eb;padding: 5px;width: full;
+                            text-align: center;font-weight: 400;">
+                                    SIGLO DEL HOMBRE EDITORES S.A
+                                    <br>
+                                    NIT. 800.154.368-8
+                                    <br>
+                                    REPORTE DE VENTAS POR REFERENCIA
+                            </div>
+                            <div style="border: 1px solid #e5e7eb;padding: 5px;">
+                               <span style="padding: 5px;font-weight: 300;">Proveedor : {{ proveedor }} <span style="opacity: 0;">---------</span> Elaborado: {{ maked }} </span>
+                            </div>
+                            <div style="border: 1px solid #e5e7eb;padding: 5px;">
+                                <span style="padding: 5px;font-weight: 300;">Periodo : {{ fecha }}<span style="opacity: 0;">---------</span>N° corte:{{ cutNumber }}<span style="opacity: 0;">---------</span>Moneda: {{ moneda }}</span>
+                            </div>
+                        </th>
+                    </tr>
                 </div>
-                <div style="border: 1px solid #e5e7eb;padding: 5px;">
-                   <span style="padding: 5px;">Proveedor : {{ proveedor }} </span>
-                </div>
-                <div style="border: 1px solid #e5e7eb;padding: 5px;">
-                    <span style="font-weight: 500;">Periodo : {{ fecha }}             N° corte: {{ cutNumber }}</span>
-                </div>
-            </section>
-        </div>
-    </nav>
-    <div style="background-color: red; height: 2px;width: 100%;"></div>
-    <section>
-        <table style="width:fit-content;" >
-            <thead>
-                <tr class="">
-                    <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Codigo</th>
+                <div style="background-color: red; height: 2px;width: 100%;"></div>
+                    <tr style="width: 100%;">
+                    <th
+                        style="width: 8%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Codigo</th>
                     {% if isSAP %}
-                    <th style="width: 8%;border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">SAP</th>
+                    <th
+                        style="width: 8%;border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        SAP</th>
                     {% endif %}
-                    <th style="width: 30%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Titulo</th>
-                    <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Precio</th>
-                    <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Cant</th>
-                    <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Valor Bruto</th>
-                    <th style="width: 8%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Descto</th>
-                    <th style="width: 12%; border: 1px solid #e5e7eb;padding: 20px;background: #e5e7eb;text-align: center;">Valor Neto</th>
-                </tr>
+                    <th
+                        style="width: 30%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Titulo</th>
+                    <th
+                        style="width: 8%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Precio</th>
+                    <th
+                        style="width: 8%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Cant</th>
+                    <th
+                        style="width: 8%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Valor Bruto</th>
+                    <th
+                        style="width: 8%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Descto</th>
+                    <th
+                        style="width: 12%; border: 1px solid #e5e7eb;padding: 5px;background: #e5e7eb;text-align: center;">
+                        Valor Neto</th>  
+                    </tr>
             </thead>
-            <tbody>
-                {% for record in records %}
-                <tr style="font-size: 14px;">
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.CODIGO }}</td>
+            <tbody style="width: 100%;">
+                {% for book in books %}
+                <tr style="font-size: 11px;">
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ book.CODIGO }}</td>
                     {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.SAP }}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ book.SAP }}</td>
                     {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.ISBN }}-{{ record.TITULO }}-{{ record.EDICION }}-{{ record.AUTOR }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ record.PRECIO|floatformat:2 }}{% else %}{{ record.PRECIO|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.CANTIDAD}}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ record.VALOR_BRUTO|floatformat:2 }}{% else %}{{ record.VALOR_BRUTO|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ record.DESCUENTO }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ record.VALOR_NETO|floatformat:2 }}{% else %}{{ record.VALOR_NETO|intcomma }}{% endif %}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ book.ISBN }}-{{ book.TITULO }}-{{ book.EDICION }}-{{ book.AUTOR }}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">
+                        {% if moneda == "PESOS" %}{{ book.PRECIO|floatformat|intcomma }}{% else %}{{ book.PRECIO|floatformat:2 }}{% endif %}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ book.CANTIDAD}}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">
+                        {% if moneda == "PESOS" %}{{ book.VALOR_BRUTO|floatformat|intcomma }}{% else %}{{ book.VALOR_BRUTO|floatformat:2 }}{% endif %}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ book.DESCUENTO }}</td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;">
+                        {% if moneda == "PESOS" %}{{ book.VALOR_NETO|floatformat|intcomma }}{% else %}{{ book.VALOR_NETO|floatformat:2 }}{% endif %}</td>
                 </tr>
                 {% endfor %}
-                <tr style="font-size: 14px;">
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                <tr style="font-size: 11px;">
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;border-left: solid red 1px;"></td>
                     {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;"></td>
                     {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalQuantity|floatformat:2 }}{% else %}{{ totals.totalQuantity|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalGrossValue|floatformat:2 }}{% else %}{{ totals.totalGrossValue|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ totals.totalNetValue|floatformat:2 }}{% else %}{{ totals.totalNetValue|intcomma }}{% endif %}</td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;">Total libros sin devoluciones : </td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;">{{ Tbooks.totalQuantity }}</td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;">
+                        {% if moneda == "PESOS" %}{{ Tbooks.totalGrossValue|floatformat|intcomma }}{% else %}{{ Tbooks.totalGrossValue|floatformat:2 }}{% endif %}</td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                    <td style="padding: 5px;background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;border-right: solid red 1px;">
+                        {% if moneda == "PESOS" %}{{ Tbooks.totalNetValue|floatformat|intcomma }}{% else %}{{ Tbooks.totalNetValue|floatformat:2 }}{% endif %}
+                    </td>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
                     {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
                     {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
                     {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
                     {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
                 </tr>
-                {% for book in booksNegative %}
-                <tr style="font-size: 14px;">
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.CODIGO }}</td>
-                    {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.SAP }}</td>
-                    {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.ISBN }}-{{ record.TITULO }}-{{ record.EDICION }}-{{ record.AUTOR }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.PRECIO|floatformat:2 }}{% else %}{{ book.PRECIO|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.CANTIDAD }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.VALOR_BRUTO|floatformat:2 }}{% else %}{{ book.VALOR_BRUTO|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ book.DESCUENTO }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ book.VALOR_NETO|floatformat:2 }}{% else %}{{ book.VALOR_NETO|intcomma }}{% endif %}</td>
-                </tr>
+                {% for devolution in devolutions.books %}
+                    <tr style="font-size: 11px;">
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ devolution.CODIGO }}</td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ devolution.SAP }}</td>
+                        {% endif %}
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ devolution.ISBN }}-{{ devolution.TITULO }}
+                            -{{ devolution.EDICION }}-{{ devolution.AUTOR }}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">
+                            {% if moneda == "PESOS" %}{{ devolution.PRECIO|floatformat|intcomma }}{% else %}{{ devolution.PRECIO|floatformat:2 }}{% endif %}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ devolution.CANTIDAD }}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">
+                            {% if moneda == "PESOS" %}{{ devolution.VALOR_BRUTO|floatformat|intcomma }}{% else %}{{ devolution.VALOR_BRUTO|floatformat:2 }}{% endif %}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">{{ devolution.DESCUENTO }}</td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;">
+                            {% if moneda == "PESOS" %}{{ devolution.VALOR_NETO|floatformat|intcomma }}{% else %}{{ devolution.VALOR_NETO|floatformat:2 }}{% endif %}
+                        </td>
+                    </tr>
                 {% endfor %}
                 {% if hasNegatives %}
-                <tr style="font-size: 14px;">
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">Total = </td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{{ newsTotals.quantity }}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ newsTotals.grossTotal|floatformat:2 }}{% else %}{{ newsTotals.grossTotal|intcomma }}{% endif %}</td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;">{% if moneda != "PESOS" %}{{ newsTotals.netTotal|floatformat:2 }}{% else %}{{ newsTotals.netTotal|intcomma }}{% endif %}</td>
-                </tr>
-                {% endif %}
-                {% if hasNegatives %}
-                <tr>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% if isSAP %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    {% endif %}
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                    <td style="border: 1px solid #e5e7eb;padding: 10px;"></td>
-                </tr>
+                    <tr style="font-size: 11px;">
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;border-left: solid red 1px;"></td>
+                        {% if isSAP %}
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                        {% endif %}
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;">Total devoluciones = </td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;">{{ devolutions.quantity }}</td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;">
+                            {% if moneda == "PESOS" %}{{ devolutions.grossTotal|floatformat|intcomma }}{% else %}{{ devolutions.grossTotal|floatformat:2 }}{% endif %}</td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;border-right: solid red 1px;">
+                            {% if moneda == "PESOS" %}{{ devolutions.netTotal|floatformat|intcomma }}{% else %}{{ devolutions.netTotal|floatformat:2 }}{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        {% endif %}
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        {% if isSAP %}
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        {% endif %}
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                        <td style="border: 1px solid #e5e7eb;padding: 5px;"></td>
+                    </tr>
+                    <tr style="font-size: 11px; ">
+                        <td style="padding: 5px; background: #e5e7eb; border-top: solid red 1px; border-bottom: solid red 1px;border-left: solid red 1px;"></td>
+                        {% if isSAP %}
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                        {% endif %}
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;">Total = </td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;">{{ total.quantity }}</td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;">
+                            {% if moneda == "PESOS" %}{{ total.grossTotal|floatformat|intcomma }}{% else %}{{ total.grossTotal|floatformat:2 }}{% endif %}</td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;"></td>
+                        <td style="padding: 5px; background: #e5e7eb;border-top: solid red 1px; border-bottom: solid red 1px;border-right: solid red 1px;">
+                            {% if moneda == "PESOS" %}{{ total.netTotal|floatformat|intcomma }}{% else %}{{ total.netTotal|floatformat:2 }}{% endif %}</td>
+                    </tr>
                 {% endif %}
             </tbody>
         </table>
         {% if hasNegatives %}
         <div style="width: 100%; text-align: center;padding: 20px;">
             NOTA: Los valores negativos en la columna CANTIDAD
-                corresponden a devoluciones en ventas  reportadas
-                por nuestros clientes durante el periodo en referencia,
-                por tanto solicitamos a ustedes se sirva expedir
-                la correspondiente nota crédito y cargar al inventario
-                de Siglo del Hombre dichas cantidades.
+            corresponden a devoluciones en ventas reportadas
+            por nuestros clientes durante el periodo en referencia,
+            por tanto solicitamos a ustedes se sirva expedir
+            la correspondiente nota crédito y cargar al inventario
+            de Siglo del Hombre dichas cantidades.
         </div>
         {% endif %}
-    </section>
-   </main>
-  </body>
+        </section>
+    </main>
+</body>
+
 </html>

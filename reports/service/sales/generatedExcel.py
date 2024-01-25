@@ -1,8 +1,6 @@
 import openpyxl
 from django.http import HttpResponse
 from ..share.calculatedTotals import printerTotalBooksAndDevolutions
-from datetime import datetime
-from .formatedRecordForDictToTuple import formatedRecordForDictToTuple
 from ..share.printerDataInSheet import printerDataInSheet
 from .bookWithoutDevolutions import bookWithoutDevolutions
 
